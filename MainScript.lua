@@ -1842,7 +1842,7 @@ GuiLibrary.SelfDestruct = function()
 end
 
 GeneralSettings.CreateButton2({
-	Name = "RESET CURRENT PROFILE", 
+	Name = "BlackMan", 
 	Function = function()
 		local vapePrivateCheck = shared.VapePrivate
 		GuiLibrary.SelfDestruct()
