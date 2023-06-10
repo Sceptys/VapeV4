@@ -5867,7 +5867,7 @@ runFunction(function()
 	
 
 	Disabler = GuiLibrary.ObjectsThatCanBeSaved.UtilityWindow.Api.CreateOptionsButton({
-		Name = "ClientKickDisabler",
+		Name = "ClientKickEnabler",
 		Function = function(callback)
 			if callback then 
 				if not disablerhooked then 
