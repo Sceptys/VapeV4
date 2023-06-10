@@ -4739,7 +4739,7 @@ runFunction(function()
 	local FieldOfViewValue = {Value = 70}
 	local oldfov
 	FieldOfView = GuiLibrary.ObjectsThatCanBeSaved.RenderWindow.Api.CreateOptionsButton({
-		Name = "FOVChanger",
+		Name = "DofChanger",
 		Function = function(callback)
 			if callback then
 				oldfov = gameCamera.FieldOfView
