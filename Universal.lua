@@ -6051,4 +6051,3 @@ runFunction(function()
 end)
 
 
-print("black man is dancing")
