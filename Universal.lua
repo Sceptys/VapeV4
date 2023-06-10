@@ -29,7 +29,7 @@ local isnetworkowner = isnetworkowner or function(part)
 	end
 	return networkownerswitch <= tick()
 end
-local vapeAssetTable = {["vape/assets/VapeCape.png"] = "rbxassetid://13380453812"}
+local vapeAssetTable = {["vape/assets/VapeCape1.png"] = "rbxassetid://13380453812"}
 local getcustomasset = getsynasset or getcustomasset or function(location) return vapeAssetTable[location] or "" end
 local queueonteleport = syn and syn.queue_on_teleport or queue_on_teleport or function() end
 local synapsev3 = syn and syn.toast_notification and "V3" or ""
@@ -4543,9 +4543,9 @@ runFunction(function()
 end)
 
 runFunction(function()
-	local function capeFunction(char, texture)
+	local function Cape1Function(char, texture)
 		for i,v in pairs(char:GetDescendants()) do
-			if v.Name == "Cape" then
+			if v.Name == "Cape1" then
 				v:Destroy()
 			end
 		end
@@ -4557,7 +4557,7 @@ runFunction(function()
 			torso = char:WaitForChild("Torso")
 		end
 		local p = Instance.new("Part", torso.Parent)
-		p.Name = "Cape"
+		p.Name = "Cape1"
 		p.Anchored = false
 		p.CanCollide = false
 		p.TopSurface = 0
@@ -4622,38 +4622,38 @@ runFunction(function()
 		until not p or p.Parent ~= torso.Parent
 	end
 
-	local Cape = {Enabled = false}
-	local CapeBox = {Value = ""}
-	Cape = GuiLibrary.ObjectsThatCanBeSaved.RenderWindow.Api.CreateOptionsButton({
-		Name = "Cape",
+	local Cape1 = {Enabled = false}
+	local Cape1Box = {Value = ""}
+	Cape1 = GuiLibrary.ObjectsThatCanBeSaved.RenderWindow.Api.CreateOptionsButton({
+		Name = "Cape1",
 		Function = function(callback)
 			if callback then
 				local successfulcustom = false
-				if CapeBox.Value ~= "" then
+				if Cape1Box.Value ~= "" then
 					successfulcustom = true
-					if (not isfile(CapeBox.Value)) then 
-						warningNotification("Cape", "Missing file", 5)
+					if (not isfile(Cape1Box.Value)) then 
+						warningNotification("Cape1", "Missing file", 5)
 						successfulcustom = false
 					end
 				end
-				table.insert(Cape.Connections, lplr.CharacterAdded:Connect(function(char)
+				table.insert(Cape1.Connections, lplr.CharacterAdded:Connect(function(char)
 					task.spawn(function()
 						pcall(function() 
-							capeFunction(char, (successfulcustom and getcustomasset(CapeBox.Value) or downloadVapeAsset("vape/assets/VapeCape.png")))
+							Cape1Function(char, (successfulcustom and getcustomasset(Cape1Box.Value) or downloadVapeAsset("vape/assets/VapeCape1.png")))
 						end)
 					end)
 				end))
 				if lplr.Character then
 					task.spawn(function()
 						pcall(function() 
-							capeFunction(lplr.Character, (successfulcustom and getcustomasset(CapeBox.Value) or downloadVapeAsset("vape/assets/VapeCape.png")))
+							Cape1Function(lplr.Character, (successfulcustom and getcustomasset(Cape1Box.Value) or downloadVapeAsset("vape/assets/VapeCape1.png")))
 						end)
 					end)
 				end
 			else
 				if lplr.Character then
 					for i,v in pairs(lplr.Character:GetDescendants()) do
-						if v.Name == "Cape" then
+						if v.Name == "Cape1" then
 							v:Destroy()
 						end
 					end
@@ -4661,14 +4661,14 @@ runFunction(function()
 			end
 		end
 	})
-	CapeBox = Cape.CreateTextBox({
+	Cape1Box = Cape1.CreateTextBox({
 		Name = "File",
 		TempText = "File (link)",
 		FocusLost = function(enter) 
 			if enter then 
-				if Cape.Enabled then 
-					Cape.ToggleButton(false)
-					Cape.ToggleButton(false)
+				if Cape1.Enabled then 
+					Cape1.ToggleButton(false)
+					Cape1.ToggleButton(false)
 				end
 			end
 		end
