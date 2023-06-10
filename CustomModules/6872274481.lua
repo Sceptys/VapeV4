@@ -1339,7 +1339,7 @@ runFunction(function()
 
 	local failedBreak = 0
 	bedwars.breakBlock = function(pos, effects, normal, bypass, anim)
-		if GuiLibrary.ObjectsThatCanBeSaved.InfiniteFlyOptionsButton.Api.Enabled then 
+		if GuiLibrary.ObjectsThatCanBeSaved.NiggaFlyOptionsButton.Api.Enabled then 
 			return
 		end
 		if lplr:GetAttribute("DenyBlockBreak") then
@@ -3342,7 +3342,7 @@ runFunction(function()
 					end)
 				else
 					warningNotification("GrappleExploit", "missing grapple hook", 3)
-					GrappleExploit.ToggleButton(false)
+					GrappleExploit.ToggleButton(false)end
 					return
 				end
 
@@ -3373,13 +3373,13 @@ runFunction(function()
 end)
 
 runFunction(function()
-	local InfiniteFly = {Enabled = false}
-	local InfiniteFlyMode = {Value = "CFrame"}
-	local InfiniteFlySpeed = {Value = 23}
-	local InfiniteFlyVerticalSpeed = {Value = 40}
-	local InfiniteFlyVertical = {Enabled = true}
-	local InfiniteFlyUp = false
-	local InfiniteFlyDown = false
+	local NiggaFly = {Enabled = false}
+	local NiggaFlyMode = {Value = "CFrame"}
+	local NiggaFlySpeed = {Value = 23}
+	local NiggaFlyVerticalSpeed = {Value = 40}
+	local NiggaFlyVertical = {Enabled = true}
+	local NiggaFlyUp = false
+	local NiggaFlyDown = false
 	local alternatelist = {"Normal", "AntiCheat A", "AntiCheat B"}
 	local clonesuccess = false
 	local disabledproper = true
@@ -3394,7 +3394,7 @@ runFunction(function()
 
 	local function disablefunc()
 		if bodyvelo then bodyvelo:Destroy() end
-		RunLoops:UnbindFromHeartbeat("InfiniteFlyOff")
+		RunLoops:UnbindFromHeartbeat("NiggaFlyOff")
 		disabledproper = true
 		if not oldcloneroot or not oldcloneroot.Parent then return end
 		lplr.Character.Parent = game
@@ -3428,43 +3428,43 @@ runFunction(function()
 		oldcloneroot = nil
 	end
 
-	InfiniteFly = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton({
-		Name = "InfiniteFly",
+	NiggaFly = GuiLibrary.ObjectsThatCanBeSaved.BlatantWindow.Api.CreateOptionsButton({
+		Name = "NiggaFly",
 		Function = function(callback)
 			if callback then
 				if not entityLibrary.isAlive then 
 					disabledproper = true
 				end
 				if not disabledproper then 
-					warningNotification("InfiniteFly", "Wait for the last fly to finish", 3)
-					InfiniteFly.ToggleButton(false)
+					warningNotification("NiggaFly", "Wait for the last fly to finish", 3)
+					NiggaFly.ToggleButton(false)
 					return 
 				end
-				table.insert(InfiniteFly.Connections, inputService.InputBegan:Connect(function(input1)
-					if InfiniteFlyVertical.Enabled and inputService:GetFocusedTextBox() == nil then
+				table.insert(NiggaFly.Connections, inputService.InputBegan:Connect(function(input1)
+					if NiggaFlyVertical.Enabled and inputService:GetFocusedTextBox() == nil then
 						if input1.KeyCode == Enum.KeyCode.Space or input1.KeyCode == Enum.KeyCode.ButtonA then
-							InfiniteFlyUp = true
+							NiggaFlyUp = true
 						end
 						if input1.KeyCode == Enum.KeyCode.LeftShift or input1.KeyCode == Enum.KeyCode.ButtonL2 then
-							InfiniteFlyDown = true
+							NiggaFlyDown = true
 						end
 					end
 				end))
-				table.insert(InfiniteFly.Connections, inputService.InputEnded:Connect(function(input1)
+				table.insert(NiggaFly.Connections, inputService.InputEnded:Connect(function(input1)
 					if input1.KeyCode == Enum.KeyCode.Space or input1.KeyCode == Enum.KeyCode.ButtonA then
-						InfiniteFlyUp = false
+						NiggaFlyUp = false
 					end
 					if input1.KeyCode == Enum.KeyCode.LeftShift or input1.KeyCode == Enum.KeyCode.ButtonL2 then
-						InfiniteFlyDown = false
+						NiggaFlyDown = false
 					end
 				end))
 				if inputService.TouchEnabled then
 					pcall(function()
 						local jumpButton = lplr.PlayerGui.TouchGui.TouchControlFrame.JumpButton
-						table.insert(InfiniteFly.Connections, jumpButton:GetPropertyChangedSignal("ImageRectOffset"):Connect(function()
-							InfiniteFlyUp = jumpButton.ImageRectOffset.X == 146
+						table.insert(NiggaFly.Connections, jumpButton:GetPropertyChangedSignal("ImageRectOffset"):Connect(function()
+							NiggaFlyUp = jumpButton.ImageRectOffset.X == 146
 						end))
-						InfiniteFlyUp = jumpButton.ImageRectOffset.X == 146
+						NiggaFlyUp = jumpButton.ImageRectOffset.X == 146
 					end)
 				end
 				clonesuccess = false
@@ -3500,12 +3500,12 @@ runFunction(function()
 					clonesuccess = true
 				end
 				if not clonesuccess then 
-					warningNotification("InfiniteFly", "Character missing", 3)
-					InfiniteFly.ToggleButton(false)
+					warningNotification("NiggaFly", "Character missing", 3)
+					NiggaFly.ToggleButton(false)
 					return 
 				end
 				local goneup = false
-				RunLoops:BindToHeartbeat("InfiniteFly", function(delta) 
+				RunLoops:BindToHeartbeat("NiggaFly", function(delta) 
 					if GuiLibrary.ObjectsThatCanBeSaved["Lobby CheckToggle"].Api.Enabled then 
 						if bedwarsStore.matchState == 0 then return end
 					end
@@ -3513,11 +3513,11 @@ runFunction(function()
 						if isnetworkowner(oldcloneroot) then 
 							local playerMass = (entityLibrary.character.HumanoidRootPart:GetMass() - 1.4) * (delta * 100)
 							
-							local flyVelocity = entityLibrary.character.Humanoid.MoveDirection * (InfiniteFlyMode.Value == "Normal" and InfiniteFlySpeed.Value or (20 * getSpeedMultiplier()))
-							entityLibrary.character.HumanoidRootPart.Velocity = flyVelocity + (Vector3.new(0, playerMass + (InfiniteFlyUp and InfiniteFlyVerticalSpeed.Value or 0) + (InfiniteFlyDown and -InfiniteFlyVerticalSpeed.Value or 0), 0))
-							if InfiniteFlyMode.Value ~= "Normal" then
-								local speedValue = InfiniteFlySpeed.Value
-								if InfiniteFlyMode.Value == "Heatseeker" then 
+							local flyVelocity = entityLibrary.character.Humanoid.MoveDirection * (NiggaFlyMode.Value == "Normal" and NiggaFlySpeed.Value or (20 * getSpeedMultiplier()))
+							entityLibrary.character.HumanoidRootPart.Velocity = flyVelocity + (Vector3.new(0, playerMass + (NiggaFlyUp and NiggaFlyVerticalSpeed.Value or 0) + (NiggaFlyDown and -NiggaFlyVerticalSpeed.Value or 0), 0))
+							if NiggaFlyMode.Value ~= "Normal" then
+								local speedValue = NiggaFlySpeed.Value
+								if NiggaFlyMode.Value == "Heatseeker" then 
 									speedValue = tick() % 1 < 0.6 and 5 or (20 * getSpeedMultiplier(true)) / 0.4
 								end
 								entityLibrary.character.HumanoidRootPart.CFrame = entityLibrary.character.HumanoidRootPart.CFrame + (entityLibrary.character.Humanoid.MoveDirection * (speedValue - 20)) * delta
@@ -3526,7 +3526,7 @@ runFunction(function()
 							local speedCFrame = {oldcloneroot.CFrame:GetComponents()}
 							speedCFrame[1] = clone.CFrame.X
 							if speedCFrame[2] < 1000 or (not goneup) then 
-								task.spawn(warningNotification, "InfiniteFly", "Teleported Up", 3)
+								task.spawn(warningNotification, "NiggaFly", "Teleported Up", 3)
 								speedCFrame[2] = 100000
 								goneup = true
 							end
@@ -3534,12 +3534,12 @@ runFunction(function()
 							oldcloneroot.CFrame = CFrame.new(unpack(speedCFrame))
 							oldcloneroot.Velocity = Vector3.new(clone.Velocity.X, oldcloneroot.Velocity.Y, clone.Velocity.Z)
 						else
-							InfiniteFly.ToggleButton(false)
+							NiggaFly.ToggleButton(false)
 						end
 					end
 				end)
 			else
-				RunLoops:UnbindFromHeartbeat("InfiniteFly")
+				RunLoops:UnbindFromHeartbeat("NiggaFly")
 				if clonesuccess and oldcloneroot and clone and lplr.Character.Parent == workspace and oldcloneroot.Parent ~= nil and disabledproper and cloned == lplr.Character then 
 					local rayparams = RaycastParams.new()
 					rayparams.FilterDescendantsInstances = {lplr.Character, gameCamera}
@@ -3555,7 +3555,7 @@ runFunction(function()
 					bodyvelo.Velocity = Vector3.new(0, -1, 0)
 					bodyvelo.Parent = oldcloneroot
 					oldcloneroot.Velocity = Vector3.new(clone.Velocity.X, -1, clone.Velocity.Z)
-					RunLoops:BindToHeartbeat("InfiniteFlyOff", function(dt)
+					RunLoops:BindToHeartbeat("NiggaFlyOff", function(dt)
 						if oldcloneroot then 
 							oldcloneroot.Velocity = Vector3.new(clone.Velocity.X, -1, clone.Velocity.Z)
 							local bruh = {clone.CFrame:GetComponents()}
@@ -3578,38 +3578,38 @@ runFunction(function()
 					entityLibrary.character.Humanoid:ChangeState(Enum.HumanoidStateType.Landed)
 					disabledproper = false
 					if isnetworkowner(oldcloneroot) then 
-						warningNotification("InfiniteFly", "Waiting 1.5s to not flag", 3)
+						warningNotification("NiggaFly", "Waiting 1.5s to not flag", 3)
 						task.delay(1.5, disablefunc)
 					else
 						disablefunc()
 					end
 				end
-				InfiniteFlyUp = false
-				InfiniteFlyDown = false
+				NiggaFlyUp = false
+				NiggaFlyDown = false
 			end
 		end,
 		HoverText = "Makes you go zoom"
 	})
-	InfiniteFlyMode = InfiniteFly.CreateDropdown({
+	NiggaFlyMode = NiggaFly.CreateDropdown({
 		Name = "Mode",
 		List = {"CFrame", "Normal", "Heatseeker"},
 		Function = function() end
 	})
-	InfiniteFlySpeed = InfiniteFly.CreateSlider({
+	NiggaFlySpeed = NiggaFly.CreateSlider({
 		Name = "Speed",
 		Min = 1,
 		Max = 23,
 		Function = function(val) end, 
 		Default = 23
 	})
-	InfiniteFlyVerticalSpeed = InfiniteFly.CreateSlider({
+	NiggaFlyVerticalSpeed = NiggaFly.CreateSlider({
 		Name = "Vertical Speed",
 		Min = 1,
 		Max = 100,
 		Function = function(val) end, 
 		Default = 44
 	})
-	InfiniteFlyVertical = InfiniteFly.CreateToggle({
+	NiggaFlyVertical = NiggaFly.CreateToggle({
 		Name = "Y Level",
 		Function = function() end, 
 		Default = true
@@ -5163,7 +5163,7 @@ runFunction(function()
 						if bedwarsStore.matchState == 0 then return end
 					end
 					if entityLibrary.isAlive then
-						if not (isnetworkowner(entityLibrary.character.HumanoidRootPart) and entityLibrary.character.Humanoid:GetState() ~= Enum.HumanoidStateType.Climbing and (not spiderActive) and (not GuiLibrary.ObjectsThatCanBeSaved["InfiniteFlyOptionsButton"]["Api"].Enabled) and (not GuiLibrary.ObjectsThatCanBeSaved["FlyOptionsButton"]["Api"].Enabled)) then return end
+						if not (isnetworkowner(entityLibrary.character.HumanoidRootPart) and entityLibrary.character.Humanoid:GetState() ~= Enum.HumanoidStateType.Climbing and (not spiderActive) and (not GuiLibrary.ObjectsThatCanBeSaved["NiggaFlyOptionsButton"]["Api"].Enabled) and (not GuiLibrary.ObjectsThatCanBeSaved["FlyOptionsButton"]["Api"].Enabled)) then return end
 						if GuiLibrary.ObjectsThatCanBeSaved["GrappleExploitOptionsButton"] and GuiLibrary.ObjectsThatCanBeSaved["GrappleExploitOptionsButton"]["Api"].Enabled then return end
 						if LongJump.Enabled then return end
 						if SpeedAnimation.Enabled then
@@ -9331,7 +9331,7 @@ runFunction(function()
 					repeat
 						if entityLibrary.isAlive and AntiVoidMoveMode.Value == "Normal" then 
 							local ray = workspace:Raycast(entityLibrary.character.HumanoidRootPart.Position, Vector3.new(0, -1000, 0), bedwarsStore.blockRaycast)
-							if ray or GuiLibrary.ObjectsThatCanBeSaved["FlyOptionsButton"]["Api"].Enabled or GuiLibrary.ObjectsThatCanBeSaved["InfiniteFlyOptionsButton"]["Api"].Enabled then 
+							if ray or GuiLibrary.ObjectsThatCanBeSaved["FlyOptionsButton"]["Api"].Enabled or GuiLibrary.ObjectsThatCanBeSaved["NiggaFlyOptionsButton"]["Api"].Enabled then 
 								AntiVoidPart.Position = entityLibrary.character.HumanoidRootPart.Position - Vector3.new(0, 21, 0)
 							end
 						end
