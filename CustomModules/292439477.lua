@@ -495,7 +495,7 @@ GuiLibrary.RemoveObject("FreecamOptionsButton")
 GuiLibrary.RemoveObject("SafeWalkOptionsButton")
 GuiLibrary.RemoveObject("KillauraOptionsButton")
 GuiLibrary.RemoveObject("HitBoxesOptionsButton")
-GuiLibrary.RemoveObject("SilentAimOptionsButton")
+GuiLibrary.RemoveObject("Kids!OptionsButton")
 GuiLibrary.RemoveObject("ReachOptionsButton")
 GuiLibrary.RemoveObject("ESPOptionsButton")
 GuiLibrary.RemoveObject("TracersOptionsButton")
@@ -640,14 +640,14 @@ local function HealthbarColorTransferFunction(healthPercent)
 	return lastcolor
 end
 
-local SilentAimPart
-local SilentAimPart2
-local SilentAimGun
-local SilentAim = {Enabled = false}
-local SilentAimAutoFire = {Enabled = false}
-local SilentAimMode = {Enabled = false}
-local SilentAimFOV = {Value = 1000}
-local SilentAimHead = {Value = 100}
+local Kids!Part
+local Kids!Part2
+local Kids!Gun
+local Kids! = {Enabled = false}
+local Kids!AutoFire = {Enabled = false}
+local Kids!Mode = {Enabled = false}
+local Kids!FOV = {Value = 1000}
+local Kids!Head = {Value = 100}
 local ReachValue = {Value = 1000}
 local Reach = {Enabled = false}
 local KnifePart
@@ -662,9 +662,9 @@ hook = hookmetamethod(game, "__index", function(self, ind, val, ...)
 	if self == KnifePart and Reach.Enabled then 
 		return CFrame.new(realcf.Position + (cam.CFrame.lookVector * ReachValue.Value))
 	end
-	if (self == SilentAimPart or self == SilentAimPart2) and SilentAim.Enabled then
+	if (self == Kids!Part or self == Kids!Part2) and Kids!.Enabled then
 		local realcf = hook(self, ind, val, ...)
-		local tar = (math.floor(Random.new().NextNumber(Random.new(), 0, 1) * 100)) <= SilentAimHead.Value and "_head" or "_torso"
+		local tar = (math.floor(Random.new().NextNumber(Random.new(), 0, 1) * 100)) <= Kids!Head.Value and "_head" or "_torso"
 		local plr 
 		local hit, pos, dir = workspace:FindPartOnRayWithIgnoreList(Ray.new(cam.CFrame.p, realcf.p - cam.CFrame.p), {
 			workspace.Players:FindFirstChild(lplr.TeamColor.Name),
@@ -673,24 +673,24 @@ hook = hookmetamethod(game, "__index", function(self, ind, val, ...)
 			workspace.CurrentCamera
 		})
 		local realAimPos = pos + (0.01 * dir)
-		if SilentAimMode.Value == "Legit" then
-			plr = GetNearestHumanoidToMouse(true, SilentAimFOV.Value, {
+		if Kids!Mode.Value == "Legit" then
+			plr = GetNearestHumanoidToMouse(true, Kids!FOV.Value, {
 				AimPart = tar,
-				Gun = SilentAimGun,
+				Gun = Kids!Gun,
 				Origin = realAimPos,
 				WallCheck = true
 			})
 		else
-			plr = GetNearestHumanoidToPosition(true, SilentAimFOV.Value, {
+			plr = GetNearestHumanoidToPosition(true, Kids!FOV.Value, {
 				AimPart = tar,
-				Gun = SilentAimGun,
+				Gun = Kids!Gun,
 				Origin = realAimPos,
 				WallCheck = true
 			})
 		end
 		if plr then 
 			local aimpos = plr._thirdPersonObject[tar].Position
-			local bulspeed = SilentAimGun:getWeaponStat("bulletspeed")
+			local bulspeed = Kids!Gun:getWeaponStat("bulletspeed")
 			local grav = math.abs(pf.PublicSettings.bulletAcceleration.Y)
 			local calculated = LaunchDirection(realAimPos, FindLeadShot(aimpos, plr._velspring._v0 or Vector3.zero, bulspeed, realAimPos, Vector3.zero, grav), bulspeed, grav, false)
 			if calculated then 
@@ -705,18 +705,18 @@ end)
 
 runcode(function()
 	local shooting = false
-	SilentAim = GuiLibrary["ObjectsThatCanBeSaved"]["CombatWindow"]["Api"].CreateOptionsButton({
-		["Name"] = "SilentAim", 
+	Kids! = GuiLibrary["ObjectsThatCanBeSaved"]["CombatWindow"]["Api"].CreateOptionsButton({
+		["Name"] = "Kids!", 
 		["Function"] = function(callback) 
 			if callback then 
 				task.spawn(function()
 					repeat
-						targetinfo.Targets.SilentAim = nil
+						targetinfo.Targets.Kids! = nil
 						if lastTargetTick <= tick() and lastTarget then
 							lastTarget = nil
 						end
 						if lastTarget then
-							targetinfo.Targets.SilentAim = {
+							targetinfo.Targets.Kids! = {
 								Player = lastTarget._player,
 								Humanoid = {
 									Health = lastTarget._healthstate.health0,
@@ -725,40 +725,40 @@ runcode(function()
 							}
 						end
 						local controller = pf.WeaponControllerInterface:getController()
-						SilentAimGun = controller and controller:getActiveWeapon()
-						if SilentAimGun and SilentAimGun:getWeaponType() == "Firearm" then 
-							SilentAimPart = SilentAimGun._barrelPart
-							SilentAimPart2 = SilentAimGun:getActiveAimStat("sightpart")
-							if SilentAimAutoFire.Enabled then
-								local tar = (math.floor(Random.new().NextNumber(Random.new(), 0, 1) * 100)) <= SilentAimHead.Value and "_head" or "_torso"
+						Kids!Gun = controller and controller:getActiveWeapon()
+						if Kids!Gun and Kids!Gun:getWeaponType() == "Firearm" then 
+							Kids!Part = Kids!Gun._barrelPart
+							Kids!Part2 = Kids!Gun:getActiveAimStat("sightpart")
+							if Kids!AutoFire.Enabled then
+								local tar = (math.floor(Random.new().NextNumber(Random.new(), 0, 1) * 100)) <= Kids!Head.Value and "_head" or "_torso"
 								local plr 
-								local hit, pos, dir = workspace:FindPartOnRayWithIgnoreList(Ray.new(cam.CFrame.p, SilentAimPart.Position - cam.CFrame.p), {
+								local hit, pos, dir = workspace:FindPartOnRayWithIgnoreList(Ray.new(cam.CFrame.p, Kids!Part.Position - cam.CFrame.p), {
 									workspace.Players:FindFirstChild(lplr.TeamColor.Name),
 									workspace.Terrain,
 									workspace.Ignore,
 									workspace.CurrentCamera
 								})
 								local realAimPos = pos + (0.01 * dir)
-								if SilentAimMode.Value == "Legit" then
-									plr = GetNearestHumanoidToMouse(true, SilentAimFOV.Value, {
+								if Kids!Mode.Value == "Legit" then
+									plr = GetNearestHumanoidToMouse(true, Kids!FOV.Value, {
 										AimPart = tar,
-										Gun = SilentAimGun,
+										Gun = Kids!Gun,
 										Origin = realAimPos,
 										WallCheck = true
 									})
 								else
-									plr = GetNearestHumanoidToPosition(true, SilentAimFOV.Value, {
+									plr = GetNearestHumanoidToPosition(true, Kids!FOV.Value, {
 										AimPart = tar,
-										Gun = SilentAimGun,
+										Gun = Kids!Gun,
 										Origin = realAimPos,
 										WallCheck = true
 									})
 								end
-								SilentAimGun:shoot(plr and true or false)
+								Kids!Gun:shoot(plr and true or false)
 							end
 						end
 						task.wait()
-					until (not SilentAim.Enabled)
+					until (not Kids!.Enabled)
 				end)
 				updateScope = pf.HudScopeInterface.updateScope
 				pf.HudScopeInterface.updateScope = function(pos1, pos2, size1, size2)
@@ -773,18 +773,18 @@ runcode(function()
 			else
 				pf.HudScopeInterface.updateScope = updateScope
 				updateScope = nil
-				SilentAimGun = nil
-				SilentAimPart = nil
-				SilentAimPart2 = nil
+				Kids!Gun = nil
+				Kids!Part = nil
+				Kids!Part2 = nil
 			end
 		end
 	})
-	SilentAimMode = SilentAim.CreateDropdown({
+	Kids!Mode = Kids!.CreateDropdown({
 		["Name"] = "Mode",
 		["List"] = {"Legit", "Blatant"},
 		["Function"] = function() end
 	})
-	SilentAimFOV = SilentAim.CreateSlider({
+	Kids!FOV = Kids!.CreateSlider({
 		["Name"] = "FOV", 
 		["Min"] = 1, 
 		["Max"] = 1000, 
@@ -795,14 +795,14 @@ runcode(function()
 		end,
 		["Default"] = 80
 	})
-	SilentAimHead = SilentAim.CreateSlider({
+	Kids!Head = Kids!.CreateSlider({
 		["Name"] = "Headshot Chance", 
 		["Min"] = 1,
 		["Max"] = 100, 
 		["Function"] = function(val) end,
 		["Default"] = 25
 	})
-	SilentAimAutoFire = SilentAim.CreateToggle({
+	Kids!AutoFire = Kids!.CreateToggle({
 		["Name"] = "AutoFire",
 		["Function"] = function() end
 	})
